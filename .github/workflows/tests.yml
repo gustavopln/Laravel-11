@@ -16,6 +16,22 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: userpass
+          MYSQL_DATABASE: laravel
+          MYSQL_USER: username
+          MYSQL_PASSWORD: userpass
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     strategy:
       fail-fast: true
       matrix:
@@ -40,8 +56,16 @@ jobs:
       - name: Copy environment file
         run: cp .env.example .env
 
+      - name: Configure .env for MySQL in GitHub Actions
+        run: |          
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=laravel/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=username/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=userpass/' .env  
+
       - name: Generate app key
         run: php artisan key:generate
 
       - name: Execute tests
-        run: vendor/bin/phpunit
+        run: vendor/bin/pest
