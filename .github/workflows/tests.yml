@@ -20,10 +20,10 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_PASSWORD: userpass
-          MYSQL_DATABASE: laravel
-          MYSQL_USER: username
-          MYSQL_PASSWORD: userpass
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
         ports:
           - 3306:3306
         options: >-
@@ -60,9 +60,9 @@ jobs:
         run: |          
           sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
           sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
-          sed -i 's/DB_DATABASE=.*/DB_DATABASE=laravel/' .env
-          sed -i 's/DB_USERNAME=.*/DB_USERNAME=username/' .env
-          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=userpass/' .env  
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=test/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=test/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=test/' .env  
 
       - name: Generate app key
         run: php artisan key:generate
