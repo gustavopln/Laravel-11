@@ -6,13 +6,8 @@
 
     <h1>Novo Usuário</h1>
 
-    @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error}}</li>
-            @endforeach
-        </ul>
-    @endif
+    {{-- @include('admin.includes.errors') --}}
+    <x-alert/>
 
     <form action="{{ route('users.store') }}" method="POST">
         <!-- <input type="text" name="_token" value="{{ csrf_token() }}"> /*Uma forma mais elegante é utilizando apenas @csrf(), que irá criar o um campo hidden*/-->
