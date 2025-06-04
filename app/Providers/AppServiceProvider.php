@@ -22,10 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('is-admin', function (User $user): bool {
-            return $user->isAdmin();
+            return $user->isAdm();
         });
 
-        Gate::define('is-owner', function (User $user, object $register): bool {
+        Gate::define('owner', function (User $user, object $register): bool {
             return $user->id === $register->user_id;
         });
     }
