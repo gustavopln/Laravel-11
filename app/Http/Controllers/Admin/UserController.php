@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -44,6 +45,10 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, string $id)
     {
+        // if (Gate::denies('is-admin')){
+        //     return back()->with('message', 'Você não é um administrador');
+        // }
+
         if (!$user = User::find($id)){
             return back()->with('message', 'Usuário não encontrado');
         }
